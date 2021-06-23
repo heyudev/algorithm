@@ -6,40 +6,90 @@ import java.util.LinkedList;
 import java.util.Map;
 
 /**
+ *
  * @author supeng
  * @date 2021/06/23
  */
 public class LRUCache {
-    private Deque<Integer> deque = new LinkedList<>();
+
+
+    class Node{
+        int key;
+        int value;
+        Node pre;
+        Node next;
+        public Node(){
+        }
+        public Node(int key, int value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+
     private int capacity;
-    private Map<Integer, Integer> map;
+    private int size;
+    private Map<Integer, Node> cache = new HashMap<>();
+    private Node tail;
+    private Node head;
+
 
     public LRUCache(int capacity) {
+        size=0;
         this.capacity = capacity;
+        tail  = new Node();
+        head = new Node();
+        head.next = tail;
+        tail.pre =head;
     }
 
     public int get(int key) {
-        if (map == null) {
-            map = new HashMap<>();
+        Node node = cache.get(key);
+        if (node == null) {
+            return -1;
         }
-        if (map.containsKey(key)) {
-            deque.remove(key);
-            deque.addFirst(key);
-            return map.get(key);
-        }
-        return -1;
+        moveToHead(node);
+        return node.value;
     }
 
     public void put(int key, int value) {
-        if (map == null) {
-            map = new HashMap<>();
+        Node node = cache.get(key);
+        if (node == null) {
+            Node newNode = new Node(key,value);
+            addToHead(newNode);
+            cache.put(key,newNode);
+            size++;
+        } else {
+            node.value = value;
+            moveToHead(node);
         }
-        deque.addFirst(key);
-        map.put(key, value);
-        if (deque.size() > capacity) {
-            int rmkey = deque.pollLast();
-            map.remove(rmkey);
+        if (size > capacity) {
+            Node tailPre = removeTail();
+            cache.remove(tailPre.key);
+            size--;
         }
+    }
+
+    public void moveToHead(Node node){
+        removeNode(node);
+        addToHead(node);
+    }
+
+    public void addToHead(Node node){
+        node.pre = head;
+        node.next = head.next;
+        head.next.pre = node;
+        head.next = node;
+    }
+
+    public void removeNode(Node node){
+        node.next.pre = node.pre;
+        node.pre.next = node.next;
+    }
+
+    public Node removeTail(){
+        Node node = tail.pre;
+        removeNode(node);
+        return node;
     }
 
     public static void main(String[] args) {
