@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 /**
  * 字符串解码
- * @author supeng
+ * @author heyudev
  * @date 2021/06/23
  */
 public class DecodeString {

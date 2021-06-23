@@ -3,7 +3,7 @@ package com.heyudev.algorithm;
 import java.util.*;
 
 /**
- * @author supeng
+ * @author heyudev
  * @date 2021/06/23
  */
 public class Test {
