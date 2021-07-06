@@ -5,7 +5,7 @@ import java.util.Map;
 
 /**
  * 无重复字符的最长子串  滑动窗口
- * @author supeng
+ * @author heyudev
  * @date 2021/07/06
  */
 public class LengthOfLongestSubstring {

@@ -1,7 +1,7 @@
 package com.heyudev.algorithm.linkedlist;
 
 /**
- * @author supeng
+ * @author heyudev
  * @date 2021/07/06
  */
 public class MergeTwoLists {

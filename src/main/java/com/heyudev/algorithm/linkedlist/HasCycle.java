@@ -30,7 +30,31 @@ public class HasCycle {
         }
         return true;
     }
-¬
+
+    /**
+     *
+     * @param head
+     * @return
+     */
+    public boolean hasCycle2(ListNode head) {
+        if (head == null || head.next == null) {
+            return false;
+        }
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast !=null) {
+            if (fast.next !=null) {
+                fast = fast.next.next;
+            } else {
+                return false;
+            }
+            slow = slow.next;
+            if (slow == fast) {
+                return true;
+            }
+        }
+        return false;
+    }
 
      class ListNode {
          int val;
